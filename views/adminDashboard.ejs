@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-zinc-900 text-zinc-200">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold mb-8">Admin Dashboard</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Users</h2>
+                <p class="text-3xl font-bold"><%= userCount.userCount %></p>
+            </div>
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Events</h2>
+                <p class="text-3xl font-bold"><%= eventCount.eventCount %></p>
+            </div>
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Hackathons</h2>
+                <p class="text-3xl font-bold"><%= hackathonCount.hackathonCount %></p>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="/admin/users" class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
+                <h2 class="text-xl font-semibold mb-2">Manage Users</h2>
+                <p>View, edit, and delete user accounts</p>
+            </a>
+            <a href="/admin/events" class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
+                <h2 class="text-xl font-semibold mb-2">Manage Events</h2>
+                <p>Add, edit, and delete events</p>
+            </a>
+            <a href="/admin/hackathons" class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
+                <h2 class="text-xl font-semibold mb-2">Manage Hackathons</h2>
+                <p>Add, edit, and delete hackathons</p>
+            </a>
+        </div>
+        
+        <a href="/admin/logout" class="mt-8 inline-block bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-2 px-4 rounded">
+            Logout
+        </a>
+    </div>
+</body>
+</html>

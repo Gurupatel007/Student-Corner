@@ -1,0 +1,210 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <style>
+    /* Import font families */
+    @font-face {
+      font-family: 'Saol Display';
+      src: url('path/to/SaolDisplay.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'GT Walsheim';
+      src: url('path/to/GTWalsheim.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'GT Walsheim';
+      src: url('path/to/GTWalsheimBold.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="flex h-screen bg-[url('public/images/64a6d9e3b3affa8513290f40_account-gradient.jpg')]">
+    <div class="w-1/2 h-screen flex flex-col justify-center px-24 -mt-20 leading-[6.2vw]">
+      <h1 class="text-[2vw] -mb-8 text-[#faddc5] font-['Saol Display']">
+        Log in
+      </h1>
+      <h1 class="text-[7.5vw] text-[#faddc5] font-['GT Walsheim'] font-black uppercase">
+        Welcome
+      </h1>
+      <h1 class="text-[7.5vw] text-[#faddc5] font-['GT Walsheim'] font-black uppercase">
+        back
+      </h1>
+    </div>
+    <div class="w-1/2 h-screen uppercase py-20 pr-10 flex flex-col justify-center align-center">
+      <div class="bg-[#fceadc] w-full h-[88vh] p-20 flex flex-col rounded-xl gap-32">
+        <form action="/login"  method="post">
+          <div class="flex flex-col">
+            <div class="mb-8">
+              <h2 class="font-['GT Walsheim'] font-black text-[3.2vw] text-[#3f4527]">
+                Your account
+              </h2>
+            </div>
+            <label for="" class="font-['GT Walsheim'] text-[#3f4527] font-black text-[1.4vw] mb-2">
+              email
+            </label>
+            <input type="text" name="identifier" class="px-5 text-[1vw] border-[1px] bg-[#fceadc] border-[#3f4527] rounded-[5px] w-full h-[6vh] mb-7 focus:outline-none focus:border-zinc-700 border-opacity-30">
+            <label for="" class="font-['GT Walsheim'] text-[#3f4527] font-black text-[1.4vw] mb-2">
+              password
+            </label>
+            <input type="text" name="password" class="px-5 text-[1vw] border-[1px] bg-[#fceadc] border-[#3f4527] rounded-[5px] w-full h-[6vh] mb-10 focus:outline-none focus:border-zinc-700 border-opacity-30">
+            <input type="submit" value="Log IN" class="w-24 h-16 bg-[#c4b94f] rounded-md font-['GT Walsheim'] text-[#3f4527] font-medium uppercase text-[1.1vw] py-3">
+          </div><br>
+          <div class="border-t-[1px] border-[#3f4527] py-5">
+            <div class="flex items-center justify-between">
+              <div class="font-['GT Walsheim'] text-[#3f4527] font-medium text-[1.1vw]">
+                <h1>don't have an account?</h1>
+                <h1 class="border-b-[1px] border-[#3f4527] w-40">
+                  <a href="/forgot-password">forgot password</a>
+                </h1>
+              </div>
+              <a href="/signup" class="font-['GT Walsheim'] text-[#3f4527] border-b-[1px] -mt-10 border-[#3f4527] font-medium text-[1.1vw]">
+                sign up
+              </a>
+            </div>
+          </div>  
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const identifier = document.querySelector('input[name="identifier"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ identifier: identifier, password: password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire(
+                    'Logged in!',
+                    'You have successfully logged in.',
+                    'success'
+                ).then(() => {
+                    window.location.href = "/dashboard"; // Redirect to /dashboard after showing the alert
+                });
+            } else {
+                Swal.fire(
+                    'Error!',
+                    data.message,
+                    'error'
+                );
+            }
+        });
+    });
+</script>
+
+</body>
+</html> -->
+
+<!-- ---------------------------------------- -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Studentcorner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <style>
+    body {
+      font-family: "Montserrat", sans-serif;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #18181b, #27272a, #3f3f46);
+    }
+    .text-gradient {
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(45deg, #a855f7, #3b82f6);
+    }
+  </style>
+</head>
+<body class="gradient-bg text-white">
+  <div class="flex h-screen items-center">
+    <div class="w-1/2 h-screen flex flex-col justify-center px-24 -mt-20">
+      <h1 class="text-[2vw] mb-4 text-purple-300">Log in</h1>
+      <h1 class="text-[7.5vw] font-bold text-gradient mb-2">Welcome</h1>
+      <h1 class="text-[7.5vw] font-bold text-gradient">back</h1>
+    </div>
+    <div class="w-1/2 h-screen pr-10 flex flex-col justify-center items-center">
+      <div class="bg-zinc-800 w-full h-[90%] p-20 rounded-xl shadow-lg">
+        <form action="/login" method="post">
+          <h2 class="font-bold text-[3.2vw] text-gradient mb-12">Your account</h2>
+          <div class="mb-8">
+            <label for="identifier" class="block text-[1.4vw] font-bold mb-2">EMAIL</label>
+            <input type="text" name="identifier" id="identifier" class="w-full px-5 py-3 text-[1vw] bg-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+          </div>
+          <div class="mb-12">
+            <label for="password" class="block text-[1.4vw] font-bold mb-2">PASSWORD</label>
+            <input type="password" name="password" id="password" class="w-full px-5 py-3 text-[1vw] bg-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+          </div>
+          <button type="submit" class="w-40 h-16 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-[1.1vw] rounded-md transition duration-300">LOG IN</button>
+        </form>
+        <div class="mt-12 pt-8 border-t border-zinc-700">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-[1.1vw]">Don't have an account?</p>
+              <a href="/forgot-password" class="text-[1.1vw] text-purple-400 hover:text-purple-300 border-b border-purple-400">Forgot password?</a>
+            </div>
+            <a href="/signup" class="text-[1.1vw] text-purple-400 hover:text-purple-300 border-b border-purple-400">Sign up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const identifier = document.querySelector('input[name="identifier"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ identifier: identifier, password: password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire(
+                    'Logged in!',
+                    'You have successfully logged in.',
+                    'success'
+                ).then(() => {
+                    window.location.href = "/dashboard";
+                });
+            } else {
+                Swal.fire(
+                    'Error!',
+                    data.message,
+                    'error'
+                );
+            }
+        });
+    });
+  </script>
+</body>
+</html>

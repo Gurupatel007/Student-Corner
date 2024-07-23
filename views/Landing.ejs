@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studentcorner - Your Gateway to Opportunities</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #18181b, #27272a, #3f3f46);
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(45deg, #a855f7, #3b82f6);
+        }
+    </style>
+</head>
+
+<body class="gradient-bg text-white">
+    <header class="fixed w-full py-4 px-6 flex justify-between items-center z-50 transition-all duration-300"
+        id="header">
+        <h1 class="text-3xl font-bold">Student<span class="italic ml-1">corner</span></h1>
+        <nav class="text-xl">
+            <a href="#features" class="mx-2 hover:text-purple-300">Features</a>
+            <a href="#testimonials" class="mx-2 hover:text-purple-300">Testimonials</a>
+            <% if (isAuthenticated) { %>
+                <a href="/dashboard" class="mx-2 hover:text-purple-300">Dashboard</a>
+                <a href="/logout" class="mx-2 hover:text-purple-300">Logout</a>
+                <% } else { %>
+                    <a href="/signin" class="mx-2 hover:text-purple-300">Login</a>
+                    <a href="/signup" class="mx-2 hover:text-purple-300">Signup</a>
+                    <% } %>
+        </nav>
+    </header>
+
+    <section class="min-h-screen flex items-center justify-center px-4 py-20">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center">
+            <div class="lg:w-1/2 lg:pr-16 mb-10 lg:mb-0">
+                <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                    Empowering <span class="text-gradient">Student Leaders</span> of Tomorrow
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8">
+                    Unlock your potential with curated events, hackathons, and scholarships tailored for ambitious
+                    students.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#explore"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-full transition duration-300 text-lg shadow-lg text-center">
+                        Explore Opportunities
+                    </a>
+                    <a href="/signup"
+                        class="bg-transparent border-2 border-purple-300 hover:bg-purple-300 hover:text-gray-900 text-purple-300 font-semibold py-3 px-6 rounded-full transition duration-300 text-lg shadow-lg text-center">
+                        Join Now
+                    </a>
+                </div>
+            </div>
+            <div class="lg:w-1/2">
+                <div class="relative">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg transform rotate-6">
+                    </div>
+                    <img src="/images/hero-bg.png" alt="Students collaborating"
+                        class="relative rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-zinc-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">Why Choose Studentcorner?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center bg-zinc-700 p-6 rounded-lg">
+                    <i class="fas fa-calendar-alt text-5xl text-purple-400 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Curated Events</h3>
+                    <p>Access a wide range of educational and networking events tailored for students.</p>
+                </div>
+                <div class="text-center bg-zinc-700 p-6 rounded-lg">
+                    <i class="fas fa-laptop-code text-5xl text-purple-400 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Exciting Hackathons</h3>
+                    <p>Participate in challenging hackathons to boost your skills and win prizes.</p>
+                </div>
+                <div class="text-center bg-zinc-700 p-6 rounded-lg">
+                    <i class="fas fa-graduation-cap text-5xl text-purple-400 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Scholarship Opportunities</h3>
+                    <p>Discover and apply for scholarships to support your educational journey.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-20 bg-zinc-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">What Our Users Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-zinc-800 p-6 rounded-lg">
+                    <p class="mb-4">"Studentcorner helped me find the perfect hackathon to kickstart my coding career!"
+                    </p>
+                    <p class="font-semibold">- Sarah J., Computer Science Student</p>
+                </div>
+                <div class="bg-zinc-800 p-6 rounded-lg">
+                    <p class="mb-4">"I discovered an amazing scholarship opportunity through this platform. Thank you!"
+                    </p>
+                    <p class="font-semibold">- Michael L., Engineering Major</p>
+                </div>
+                <div class="bg-zinc-800 p-6 rounded-lg">
+                    <p class="mb-4">"The events I've attended through Studentcorner have expanded my professional
+                        network."</p>
+                    <p class="font-semibold">- Emily R., Business Student</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gradient-to-r from-transparent via-purple-900 to-transparent">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6 text-white">Ready to Elevate Your Student Journey?</h2>
+            <p class="text-xl mb-8 text-gray-300">Join thousands of students already benefiting from our platform.</p>
+            <a href="/signup"
+                class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 shadow-lg">
+                Sign Up Now
+            </a>
+        </div>
+    </section>
+
+    <section class="py-20 bg-zinc-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6 text-gradient">Stay Informed</h2>
+            <p class="text-xl mb-8 text-gray-300">Subscribe to our newsletter for the latest opportunities and student
+                resources.</p>
+            <form action="/subscribe" method="post"
+                class="max-w-md mx-auto flex flex-col sm:flex-row items-center justify-center">
+                <input type="email" id="email" name="email" placeholder="Enter your email" required
+                    class="w-full sm:w-2/3 px-4 py-2 mb-4 sm:mb-0 sm:mr-4 bg-zinc-700 rounded focus:outline-none focus:ring-2 focus:ring-purple-300">
+                <button type="submit"
+                    class="w-full sm:w-auto px-6 py-2 bg-purple-600 text-white rounded text-lg hover:bg-purple-700 transition-colors shadow-lg">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-zinc-900 text-zinc-400 py-12 px-6">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">Studentcorner</h3>
+                <p>Empowering students to reach their full potential.</p>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                <ul>
+                    <li><a href="#" class="hover:text-purple-300">About Us</a></li>
+                    <li><a href="#" class="hover:text-purple-300">FAQs</a></li>
+                    <li><a href="#" class="hover:text-purple-300">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-purple-300">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                <p>Email: info@studentcorner.com</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-2xl hover:text-purple-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-2xl hover:text-purple-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-2xl hover:text-purple-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-2xl hover:text-purple-300"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <p>&copy; 2024 Studentcorner. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-zinc-800');
+            } else {
+                header.classList.remove('bg-zinc-800');
+            }
+        });
+
+        // Newsletter form submission
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+
+            fetch('/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire(
+                            'Subscribed!',
+                            'You have successfully subscribed to our newsletter.',
+                            'success'
+                        ).then(() => {
+                            document.getElementById('email').value = '';
+                        });
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

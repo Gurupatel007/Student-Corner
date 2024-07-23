@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= hackathonDetails.eventName %></title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body{
+            font-family: "Montserrat", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-zinc-900 font-['GT Walsheim'] text-zinc-200">
+    <!-- Header section -->
+    <header class="header bg-opacity-0 w-full py-4 px-6 flex justify-between items-center z-10">
+        <h1 class="header-title text-3xl font-bold">Hackathon<span class="italic ml-1">Details</span></h1>
+        <nav class="header-links flex text-xl">
+            <!-- <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a> -->
+            <!-- please add button to events list and hackathons home page -->
+            <a href="/events" class="hover:text-[#B0A4D1] mx-2">Events</a>
+            <a href="/hackathons" class="hover:text-[#B0A4D1] mx-2">Hackathons</a>
+            <a href="/dashboard" class="hover:text-[#B0A4D1] mx-2">Dashboard</a>
+            <!-- <a href="/" class="hover:text-[#B0A4D1] mx-2">Home</a> -->
+            <!-- <a href="/login" class="hover:text-[#B0A4D1] mx-2">Login</a>
+            <a href="/signup" class="hover:text-[#B0A4D1] mx-2">Signup</a> -->
+        </nav>
+    </header>
+
+    <!-- Hackathon Details section -->
+    <div class="container mx-auto py-12">
+        <div class="flex flex-col md:flex-row">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <img src="<%= hackathonDetails.moreDetails.img %>" alt="<%= hackathonDetails.eventName %>" class="w-full h-auto rounded-lg">
+            </div>
+            <div class="md:w-1/2 md:pl-8">
+                <h1 class="text-4xl font-bold mb-4"><%= hackathonDetails.eventName %></h1>
+                <p class="text-lg mb-4">
+                    <span class="font-semibold">Location:</span> <%= hackathonDetails.location %><br>
+                    <span class="font-semibold">Date:</span> <%= hackathonDetails.deadlineDate %><br>
+                    <span class="font-semibold">Day:</span> <%= hackathonDetails.day %>, <%= hackathonDetails.month %><br>
+                    <span class="font-semibold">Time:</span> <%= hackathonDetails.moreDetails.startingTime %> - <%= hackathonDetails.moreDetails.endingTime %><br>
+                    <span class="font-semibold">Age:</span> <%= hackathonDetails.moreDetails.age %><br>
+                    <span class="font-semibold">Country:</span> <%= hackathonDetails.moreDetails.country %>
+                </p>
+                <p class="text-lg mb-8"><%= hackathonDetails.moreDetails.description %></p>
+                <button onclick="enroll('<%= hackathonDetails.id %>', 'hackathon')" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll Now</button>
+            </div>
+        </div>
+        <br><br>
+        <!-- Related Hackathons section -->
+        <h2 class="text-3xl font-bold mb-8">Related Hackathons</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% relatedHackathons.forEach(hackathon => { %>
+                <div class="bg-zinc-800 rounded-lg shadow-md overflow-hidden">
+                    <img src="<%= hackathon.moreDetails.img %>" alt="<%= hackathon.eventName %>" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2"><%= hackathon.eventName %></h3>
+                        <p class="text-lg mb-4">
+                            <span class="font-semibold">Location:</span> <%= hackathon.location %><br>
+                            <span class="font-semibold">Date:</span> <%=  new Date(hackathon.deadlineDate).toLocaleDateString() %><br>
+                            <span class="font-semibold">Day:</span> <%= hackathon.day %>, <%= hackathon.month %>
+                        </p>
+                        <a href="/hackathon/<%= hackathon.moreDetails.eventid %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn More</a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <script>
+        function enroll(eventId, eventType) {
+    fetch('/enroll', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ eventId, eventType }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Enrolled successfully!');
+        } else {
+            alert('Failed to enroll: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+    </script>
+</body>
+</html>
