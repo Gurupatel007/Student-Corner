@@ -2,7 +2,7 @@ const mysql = require("mysql");
 
 module.exports = [
   {
-    id: 0,
+
     deadlineDate: "2024-04-26",
     eventName: "Royal Kingsnight",
     logo: "https://hardstyle.com/thumbs/1600x0/@0.5x0.5/gfx/events/7e987d5e-3a81-49c0-a3e3-2a052471b0d3/images/header_img.jpg",
@@ -20,7 +20,7 @@ module.exports = [
     },
   },
   {
-    id: 1,
+
     deadlineDate: "2025-04-03",
     eventName: "Tech Summit",
     logo: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
@@ -38,7 +38,7 @@ module.exports = [
     },
   },
   {
-    id: 2,
+
     deadlineDate: "2024-09-24",
     eventName: "Art Exhibition",
     logo: "https://images.unsplash.com/photo-1503293050619-6048ffad0dc5?q=80&w=1775&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -56,7 +56,7 @@ module.exports = [
     },
   },
   {
-    id: 3,
+
     deadlineDate: "2024-07-18",
     eventName: "Culinary Festival",
     logo: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80",
@@ -74,7 +74,7 @@ module.exports = [
     },
   },
   {
-    id: 4,
+
     deadlineDate: "2025-09-22",
     eventName: "Fashion Week",
     logo:"https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
@@ -92,7 +92,7 @@ module.exports = [
     },
   },
   {
-    id: 5,
+
     deadlineDate: "2025-01-11",
     eventName: "Book Fair",
     logo: "https://images.unsplash.com/photo-1523473125050-1c9405e8b208?q=80&w=1771&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -110,7 +110,7 @@ module.exports = [
     },
   },
   {
-    id: 6,
+
     deadlineDate: "2025-02-01",
     eventName: "Music Festival",
     logo: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80",
@@ -128,7 +128,7 @@ module.exports = [
     },
   },
   {
-    id: 7,
+
     deadlineDate: "2024-09-24",
     eventName: "Outdoor Adventure",
     logo: "https://images.unsplash.com/photo-1414016642750-7fdd78dc33d9?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -146,7 +146,7 @@ module.exports = [
     },
   },
   {
-    id: 8,
+
     deadlineDate: "2024-12-10",
     eventName: "Film Festival",
     logo: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80",
@@ -164,7 +164,7 @@ module.exports = [
     },
   },
   {
-    id: 9,
+
     deadlineDate: "2025-05-21",
     eventName: "Dance Competition",
     logo: "https://images.unsplash.com/photo-1474308371634-c715850e8d8b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -182,7 +182,7 @@ module.exports = [
     },
   },
   {
-    id: 10,
+
     deadlineDate: "2024-11-17",
     eventName: "Business Conference",
     logo: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -200,7 +200,7 @@ module.exports = [
     },
   },
   {
-    id: 11,
+
     deadlineDate: "2025-03-15",
     eventName: "Science Fair",
     logo: "https://images.unsplash.com/photo-1554475901-4538ddfbccc2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1161&q=80",
@@ -218,7 +218,6 @@ module.exports = [
     },
   },
   {
-    id: 12,
     deadlineDate: "2024-08-10",
     eventName: "Food Truck Festival",
     logo: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80",
@@ -236,7 +235,7 @@ module.exports = [
     },
   },
   {
-    id: 13,
+
     deadlineDate: "2025-06-20",
     eventName: "Gaming Convention",
     logo: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
@@ -254,7 +253,6 @@ module.exports = [
     },
   },
   {
-    id: 14,
     deadlineDate: "2024-10-31",
     eventName: "Halloween Party",
     logo: "https://images.unsplash.com/photo-1607411713289-769cd0dcce87?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -278,53 +276,46 @@ const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "createaccount",
-  port: "3307", // Change the port as needed
+  port: "3307",
 });
 
-// Create the 'accounts' table for account registration
 db.connect((err) => {
   if (err) {
     console.log("MySQL connection failed: " + err.message);
   } else {
     console.log("Connected to MySQL");
-    const events = module.exports; // Your provided data
+    const events = module.exports;
 
-    let eventsSQL = 'REPLACE INTO events (id, deadlineDate, eventName, logo, location, month, day) VALUES\n';
-
-    let detailsSQL = 'REPLACE INTO event_details (eventid, event_id, img, startingTime, endingTime, description, age, country) VALUES\n';
-
+    let eventsSQL = 'INSERT INTO events (id, deadlineDate, eventName, logo, location, month, day, img, startingTime, endingTime, description, age, country) VALUES\n';
 
     events.forEach((event, index) => {
-      eventsSQL += `(${event.id}, '${event.deadlineDate}', '${event.eventName.replace(/'/g, "''")}', '${event.logo}', '${event.location.replace(/'/g, "''")}', '${event.month}', '${event.day}')`;
-
-      detailsSQL += `('${event.moreDetails.eventid}', ${event.id}, '${event.moreDetails.img}', '${event.moreDetails.startingTime}', '${event.moreDetails.endingTime}', '${event.moreDetails.description.replace(/'/g, "''")}', '${event.moreDetails.age}', '${event.moreDetails.country.replace(/'/g, "''")}')`;
+      eventsSQL += `(
+        '${event.moreDetails.eventid}',
+        '${event.deadlineDate}',
+        '${event.eventName.replace(/'/g, "''")}',
+        '${event.logo}',
+        '${event.location.replace(/'/g, "''")}',
+        '${event.month}',
+        '${event.day}',
+        '${event.moreDetails.img}',
+        '${event.moreDetails.startingTime}',
+        '${event.moreDetails.endingTime}',
+        '${event.moreDetails.description.replace(/'/g, "''")}',
+        '${event.moreDetails.age}',
+        '${event.moreDetails.country.replace(/'/g, "''")}'
+      )`;
 
       if (index < events.length - 1) {
         eventsSQL += ',\n';
-        detailsSQL += ',\n';
       } else {
         eventsSQL += ';\n';
-        detailsSQL += ';\n';
       }
     });
 
     db.query(eventsSQL, (err, result) => {
       if (err) throw err;
       console.log("Events data inserted");
-
-      db.query(detailsSQL, (err, result) => {
-        if (err) throw err;
-        console.log("Event details data inserted");
-        db.end(); // Close the connection after all queries are done
-      });
+      db.end();
     });
   }
 });
-
-
-
-
-// console.log(eventsSQL);
-// console.log(detailsSQL);
-
-

@@ -32,20 +32,25 @@
     <div class="container mx-auto py-12">
         <div class="flex flex-col md:flex-row">
             <div class="md:w-1/2 mb-8 md:mb-0">
-                <img src="<%= hackathonDetails.moreDetails.img %>" alt="<%= hackathonDetails.eventName %>" class="w-full h-auto rounded-lg">
+                <img src="<%= hackathonDetails.img %>" alt="<%= hackathonDetails.eventName %>" class="w-full h-auto rounded-lg">
             </div>
             <div class="md:w-1/2 md:pl-8">
                 <h1 class="text-4xl font-bold mb-4"><%= hackathonDetails.eventName %></h1>
                 <p class="text-lg mb-4">
                     <span class="font-semibold">Location:</span> <%= hackathonDetails.location %><br>
-                    <span class="font-semibold">Date:</span> <%= hackathonDetails.deadlineDate %><br>
+                    <span class="font-semibold">Date:</span> <%= new Date(hackathonDetails.deadlineDate).toLocaleDateString()%><br>
                     <span class="font-semibold">Day:</span> <%= hackathonDetails.day %>, <%= hackathonDetails.month %><br>
-                    <span class="font-semibold">Time:</span> <%= hackathonDetails.moreDetails.startingTime %> - <%= hackathonDetails.moreDetails.endingTime %><br>
-                    <span class="font-semibold">Age:</span> <%= hackathonDetails.moreDetails.age %><br>
-                    <span class="font-semibold">Country:</span> <%= hackathonDetails.moreDetails.country %>
+                    <span class="font-semibold">Time:</span> <%= hackathonDetails.startingTime %> - <%= hackathonDetails.endingTime %><br>
+                    <span class="font-semibold">Age:</span> <%= hackathonDetails.age %><br>
+                    <span class="font-semibold">Country:</span> <%= hackathonDetails.country %>
                 </p>
-                <p class="text-lg mb-8"><%= hackathonDetails.moreDetails.description %></p>
-                <button onclick="enroll('<%= hackathonDetails.id %>', 'hackathon')" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll Now</button>
+                <p class="text-lg mb-8"><%= hackathonDetails.description %></p>
+                <!-- <button onclick="enroll('<%= hackathonDetails.id %>', 'hackathon')" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll Now</button> -->
+                <% if (hackathonDetails.isEnrolled) { %>
+                    <button onclick="unenroll('<%= hackathonDetails.id %>', 'hackathon')" class="btn bg-red-500 text-white font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Unenroll</button>
+                <% } else { %>
+                    <button onclick="enroll('<%= hackathonDetails.id %>', 'hackathon')" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll Now</button>
+                <% } %>
             </div>
         </div>
         <br><br>
@@ -54,7 +59,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <% relatedHackathons.forEach(hackathon => { %>
                 <div class="bg-zinc-800 rounded-lg shadow-md overflow-hidden">
-                    <img src="<%= hackathon.moreDetails.img %>" alt="<%= hackathon.eventName %>" class="w-full h-48 object-cover">
+                    <img src="<%= hackathon.img %>" alt="<%= hackathon.eventName %>" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2"><%= hackathon.eventName %></h3>
                         <p class="text-lg mb-4">
@@ -62,7 +67,12 @@
                             <span class="font-semibold">Date:</span> <%=  new Date(hackathon.deadlineDate).toLocaleDateString() %><br>
                             <span class="font-semibold">Day:</span> <%= hackathon.day %>, <%= hackathon.month %>
                         </p>
-                        <a href="/hackathon/<%= hackathon.moreDetails.eventid %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn More</a>
+                        <a href="/hackathon/<%= hackathon.id %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn More</a>
+                        <% if (hackathon.isEnrolled) { %>
+                            <button onclick="unenroll('<%= hackathon.id %>', 'hackathon')" class="btn bg-red-500 text-white font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Unenroll</button>
+                        <% } else { %>
+                            <button onclick="enroll('<%= hackathon.id %>', 'hackathon')" class="btn bg-blue-500 text-white font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll</button>
+                        <% } %>
                     </div>
                 </div>
             <% }) %>
@@ -87,6 +97,25 @@
     })
     .catch(error => console.error('Error:', error));
 }
+function unenroll(hackathonId, type) {
+    fetch(`/unenroll/${hackathonId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ type })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        location.reload();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
 
     </script>
 </body>

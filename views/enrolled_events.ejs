@@ -1,0 +1,227 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrolled Events</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body{
+            font-family: "Montserrat", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-zinc-900 font-['GT Walsheim'] text-zinc-200">
+
+    <header class="header bg-opacity-0 w-full py-4 px-6 flex justify-between items-center z-10">
+        <h1 class="header-title text-3xl font-bold">Enrolled<span class="italic ml-1">Events</span></h1>
+        <nav class="header-links flex text-xl">
+            <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a>
+            <a href="/hackathons" class="hover:text-[#B0A4D1] mx-2">Hackathon</a>
+            <a href="/dashboard" class="hover:text-[#B0A4D1] mx-2">Dashboard</a>
+        </nav>
+    </header>
+
+
+    <div class="container mx-auto py-12">
+        <h1 class="text-5xl font-black uppercase mb-8 text-center">Enrolled Events</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% EnrolledEvents.forEach(event => { %>
+                <div class="bg-zinc-800 rounded-lg shadow-md overflow-hidden">
+                    <img src="<%= event.image %>" alt="<%= event.eventName %>" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold mb-2"><%= event.eventName %></h2>
+                        <p class="text-lg mb-4">
+                            <span class="font-semibold">Location:</span> <%= event.location %><br>
+                            <span class="font-semibold">Date:</span> <%= new Date(event.deadlineDate).toLocaleDateString()%><br>
+                            <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %>
+                        </p>
+                        <p class="text-lg mb-4"><%= event.description %></p>
+                        <div class="flex space-x-4">
+                            <a href="/event/<%= event.id %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn More</a>
+                            <form action="/unenroll" method="POST">
+                                <input type="hidden" name="eventId" value="<%= event.id %>">
+                                <button type="submit" class="btn bg-red-500 hover:bg-red-600 text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Unenroll</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrolled Events</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+        .slider-container {
+            overflow: hidden;
+            position: relative;
+            padding: 0 50px; /* Add padding for the buttons */
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            flex: 0 0 33.333%;
+            max-width: 33.333%;
+            padding: 0 10px;
+        }
+        .arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(176, 164, 209, 0.8);
+            color: #18181b;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+        .arrow-btn:hover {
+            background-color: rgba(176, 164, 209, 1);
+        }
+        #prevBtn {
+            left: 10px;
+        }
+        #nextBtn {
+            right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-zinc-900 font-['GT Walsheim'] text-zinc-200">
+    <header class="header bg-opacity-0 w-full py-4 px-6 flex justify-between items-center z-10">
+        <h1 class="header-title text-3xl font-bold">Enrolled<span class="italic ml-1">Events</span></h1>
+        <nav class="header-links flex text-xl">
+            <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a>
+            <a href="/hackathons" class="hover:text-[#B0A4D1] mx-2">Hackathon</a>
+            <a href="/dashboard" class="hover:text-[#B0A4D1] mx-2">Dashboard</a>
+        </nav>
+    </header>
+    <div class="container mx-auto py-12">
+        <h1 class="text-5xl font-black uppercase mb-8 text-center">Enrolled Events</h1>
+        <div class="slider-container">
+            <button id="prevBtn" class="arrow-btn">&larr;</button>
+            <button id="nextBtn" class="arrow-btn">&rarr;</button>
+            <div class="slider">
+                <% EnrolledEvents.forEach(event => { %>
+                    <div class="slide">
+                        <div class="bg-zinc-800 rounded-lg shadow-md overflow-hidden h-full ">
+                            <img src="<%= event.image %>" alt="<%= event.eventName %>" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h2 class="text-2xl font-bold mb-2"><%= event.name %></h2>
+                                <p class="text-lg mb-4">
+                                    <span class="font-semibold">Location:</span> <%= event.location %><br>
+                                    <span class="font-semibold">Date:</span> <%= new Date(event.deadline).toLocaleDateString()%><br>
+                                    <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %>
+                                </p>
+                                <p class="text-lg mb-4"><%= event.description %></p>
+                                <div class="flex space-x-4">
+                                    <a href="/event/<%= event.id %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn More</a>
+                                    <form action="/unenroll" method="POST">
+                                        <input type="hidden" name="eventId" value="<%= event.id %>">
+                                        <button type="submit" class="btn bg-red-500 hover:bg-red-600 text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Unenroll</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto py-12">
+        <h1 class="text-5xl font-black uppercase mb-8 text-center">Past Enrollments</h1>
+        <div class="slider-container">
+            <button id="pastPrevBtn" class="arrow-btn">&larr;</button>
+            <button id="pastNextBtn" class="arrow-btn">&rarr;</button>
+            <div class="slider" id="pastSlider">
+                <% PastEnrolledEvents.forEach(event => { %>
+                    <div class="slide">
+                        <div class="bg-zinc-800 rounded-lg shadow-md overflow-hidden h-full">
+                            <img src="<%= event.image %>" alt="<%= event.eventName %>" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h2 class="text-2xl font-bold mb-2"><%= event.name %></h2>
+                                <p class="text-lg mb-4">
+                                    <span class="font-semibold">Location:</span> <%= event.location %><br>
+                                    <span class="font-semibold">Date:</span> <%= new Date(event.deadline).toLocaleDateString()%><br>
+                                    <!-- <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %> -->
+                                </p>
+                                <p class="text-lg mb-4"><%= event.description %></p>
+                                <a href="/event/<%= event.id %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+
+        function showSlides(index) {
+            if (index < 0) {
+                currentIndex = slides.length - 3;
+            } else if (index >= slides.length - 2) {
+                currentIndex = 0;
+            } else {
+                currentIndex = index;
+            }
+            slider.style.transform = `translateX(-${currentIndex * 33.333}%)`;
+        }
+
+        prevBtn.addEventListener('click', () => showSlides(currentIndex - 1));
+        nextBtn.addEventListener('click', () => showSlides(currentIndex + 1));
+
+        // Initialize
+        showSlides(currentIndex);
+
+        const pastSlider = document.getElementById('pastSlider');
+        const pastSlides = pastSlider.querySelectorAll('.slide');
+        const pastPrevBtn = document.getElementById('pastPrevBtn');
+        const pastNextBtn = document.getElementById('pastNextBtn');
+        let pastCurrentIndex = 0;
+
+        function showPastSlides(index) {
+            if (index < 0) {
+                pastCurrentIndex = pastSlides.length - 3;
+            } else if (index >= pastSlides.length - 2) {
+                pastCurrentIndex = 0;
+            } else {
+                pastCurrentIndex = index;
+            }
+            pastSlider.style.transform = `translateX(-${pastCurrentIndex * 33.333}%)`;
+        }
+
+        pastPrevBtn.addEventListener('click', () => showPastSlides(pastCurrentIndex - 1));
+        pastNextBtn.addEventListener('click', () => showPastSlides(pastCurrentIndex + 1));
+
+        // Initialize past events slider
+        showPastSlides(pastCurrentIndex);
+    </script>
+</body>
+</html>

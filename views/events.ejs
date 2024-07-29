@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event List</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        body{
+        body {
             font-family: "Montserrat", sans-serif;
         }
     </style>
 </head>
+
 <body class="bg-zinc-900 font-['GT Walsheim'] text-zinc-200">
     <!-- Header section -->
     <header class="header bg-opacity-0 w-full py-4 px-6 flex justify-between items-center z-10">
@@ -27,13 +30,13 @@
         </nav>
     </header>
 
-    <!-- Event List section -->
-    <div class="container mx-auto py-12">
+
+    <!-- <div class="container mx-auto py-12">
         <h1 class="text-5xl font-black uppercase mb-8 text-center">Upcoming Events</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <% upcomingEvents.forEach(event => { %>
                 <div class="bg-zinc-800 rounded-lg shadow-md overflow-hidden">
-                    <img src="<%= event.moreDetails.img %>" alt="<%= event.eventName %>" class="w-full h-48 object-cover">
+                    <img src="<%= event.img %>" alt="<%= event.eventName %>" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h2 class="text-2xl font-bold mb-2"><%= event.eventName %></h2>
                         <p class="text-lg mb-4">
@@ -41,12 +44,118 @@
                             <span class="font-semibold">Date:</span> <%= new Date(event.deadlineDate).toLocaleDateString()%><br>
                             <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %>
                         </p>
-                        <p class="text-lg mb-4"><%= event.moreDetails.description %></p>
-                        <a href="/event/<%= event.moreDetails.eventid %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn More</a>
+                        <p class="text-lg mb-4"><%= event.description %></p>
+                        <a href="/event/<%= event.id %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn More</a>
                     </div>
                 </div>
             <% }) %>
         </div>
+    </div> -->
+    <div class="container mx-auto py-12">
+        <h1 class="text-5xl font-black uppercase mb-8 text-center">Upcoming Events</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% upcomingEvents.forEach(event=> { %>
+                <div class="bg-zinc-800 rounded-lg shadow-md overflow-hidden">
+                    <img src="<%= event.img %>" alt="<%= event.eventName %>" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold mb-2">
+                            <%= event.eventName %>
+                        </h2>
+                        <p class="text-lg mb-4">
+                            <span class="font-semibold">Location:</span>
+                            <%= event.location %><br>
+                                <span class="font-semibold">Date:</span>
+                                <%= new Date(event.deadlineDate).toLocaleDateString() %><br>
+                                    <span class="font-semibold">Day:</span>
+                                    <%= event.day %>, <%= event.month %>
+                        </p>
+                        <p class="text-lg mb-4">
+                            <%= event.description %>
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="/event/<%= event.id %>"
+                                class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Learn
+                                More</a>
+                            <% if (event.isEnrolled) { %>
+                                <form id="unenrollForm-<%= event.id %>" data-event-id="<%= event.id %>">
+                                    <input type="hidden" name="eventId" value="<%= event.id %>">
+                                    <input type="hidden" name="eventType" value="event">
+                                    <button type="submit"
+                                        class="btn bg-red-500 hover:bg-red-600 text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Unenroll</button>
+                                </form>
+                                <% } else { %>
+                                    <form id="enrollForm-<%= event.id %>" data-event-id="<%= event.id %>">
+                                        <input type="hidden" name="eventId" value="<%= event.id %>">
+                                        <input type="hidden" name="eventType" value="event">
+                                        <button type="submit"
+                                            class="btn bg-blue-400 hover:bg-blue-500 text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll</button>
+                                    </form>
+                                    <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
     </div>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const enrollForms = document.querySelectorAll('form[id^="enrollForm-"]');
+            const unenrollForms = document.querySelectorAll('form[id^="unenrollForm-"]');
+
+            function handleFormSubmit(form, action) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const eventId = this.dataset.eventId;
+
+                    fetch(`/${action}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            eventId: eventId,
+                            eventType: 'event'
+                        }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: data.message,
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: data.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An unexpected error occurred',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                });
+            }
+
+            enrollForms.forEach(form => handleFormSubmit(form, 'enroll'));
+            unenrollForms.forEach(form => handleFormSubmit(form, 'unenroll'));
+        });
+    </script>
 </body>
+
 </html>

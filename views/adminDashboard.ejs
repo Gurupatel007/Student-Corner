@@ -1,48 +1,253 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard | HackathonList</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 </head>
-<body class="bg-zinc-900 text-zinc-200">
+<body class="bg-gradient-to-br from-zinc-900 to-zinc-800 text-zinc-200 font-['Poppins'] min-h-screen">
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold mb-8">Admin Dashboard</h1>
+        <h1 class="text-5xl font-bold mb-12 text-center text-[#B0A4D1]">Admin Dashboard</h1>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-2">Total Users</h2>
-                <p class="text-3xl font-bold"><%= userCount.userCount %></p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-zinc-800 p-8 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                <h2 class="text-2xl font-semibold mb-4 text-[#B0A4D1]">Total Users</h2>
+                <p class="text-4xl font-bold"><%= userCount %></p>
             </div>
-            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-2">Total Events</h2>
-                <p class="text-3xl font-bold"><%= eventCount.eventCount %></p>
+            <div class="bg-zinc-800 p-8 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                <h2 class="text-2xl font-semibold mb-4 text-[#B0A4D1]">Total Events</h2>
+                <p class="text-4xl font-bold"><%= eventCount %></p>
             </div>
-            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-2">Total Hackathons</h2>
-                <p class="text-3xl font-bold"><%= hackathonCount.hackathonCount %></p>
+            <div class="bg-zinc-800 p-8 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                <h2 class="text-2xl font-semibold mb-4 text-[#B0A4D1]">Total Hackathons</h2>
+                <p class="text-4xl font-bold"><%= hackathonCount %></p>
             </div>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a href="/admin/users" class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <a href="/admin/users" class="bg-zinc-800 p-8 rounded-xl shadow-lg hover:bg-zinc-700 transition duration-300 flex flex-col items-center">
+                <i data-feather="users" class="mb-4 text-[#B0A4D1]"></i>
+                <h2 class="text-2xl font-semibold mb-2 text-[#B0A4D1]">Manage Users</h2>
+                <p class="text-center">View, edit, and delete user accounts</p>
+            </a>
+            <a href="/admin/events" class="bg-zinc-800 p-8 rounded-xl shadow-lg hover:bg-zinc-700 transition duration-300 flex flex-col items-center">
+                <i data-feather="calendar" class="mb-4 text-[#B0A4D1]"></i>
+                <h2 class="text-2xl font-semibold mb-2 text-[#B0A4D1]">Manage Events</h2>
+                <p class="text-center">Add, edit, and delete events</p>
+            </a>
+            <a href="/admin/hackathons" class="bg-zinc-800 p-8 rounded-xl shadow-lg hover:bg-zinc-700 transition duration-300 flex flex-col items-center">
+                <i data-feather="code" class="mb-4 text-[#B0A4D1]"></i>
+                <h2 class="text-2xl font-semibold mb-2 text-[#B0A4D1]">Manage Hackathons</h2>
+                <p class="text-center">Add, edit, and delete hackathons</p>
+            </a>
+        </div>
+        
+        <div class="text-center">
+            <a href="/admin/logout" class="inline-block bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-3 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                Logout
+            </a>
+        </div>
+    </div>
+    <script>
+        feather.replace()
+    </script>
+</body>
+</html> -->
+
+<!-- ----------------------------------- -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackathonList Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-zinc-900 to-zinc-800 text-zinc-200 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <header class="flex justify-between items-center mb-12">
+            <h1 class="text-4xl font-bold text-[#B0A4D1]">Admin Dashboard</h1>
+            <div class="flex items-center space-x-4">
+                <button id="themeToggle" class="p-2 rounded-full bg-zinc-700 hover:bg-zinc-600">
+                        <i data-feather="sun"></i>
+                </button>
+                <a href="/admin/logout"
+                    class="bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-2 px-4 rounded">
+                    Logout
+                </a>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Users</h2>
+                <p class="text-3xl font-bold">
+                    <%= userCount %>
+                </p>
+                <canvas id="userChart" class="mt-4"></canvas>
+            </div>
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Events</h2>
+                <p class="text-3xl font-bold">
+                    <%= eventCount %>
+                </p>
+                <canvas id="eventChart" class="mt-4"></canvas>
+            </div>
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Hackathons</h2>
+                <p class="text-3xl font-bold">
+                    <%= hackathonCount %>
+                </p>
+                <canvas id="hackathonChart" class="mt-4"></canvas>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <a href="/admin/users/add"
+                        class="bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-2 px-4 rounded text-center">
+                        Add User
+                    </a>
+                    <a href="/admin/events/add"
+                        class="bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-2 px-4 rounded text-center">
+                        Add Event
+                    </a>
+                    <a href="/admin/hackathons/add"
+                        class="bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-2 px-4 rounded text-center">
+                        Add Hackathon
+                    </a>
+                    <a href="/admin/reports"
+                        class="bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-2 px-4 rounded text-center">
+                        View Reports
+                    </a>
+                </div>
+            </div>
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+                <ul class="space-y-2">
+                    <li class="flex items-center">
+                        <i data-feather="user-plus" class="mr-2"></i>
+                        New user registered
+                    </li>
+                    <li class="flex items-center">
+                        <i data-feather="calendar" class="mr-2"></i>
+                        New event added
+                    </li>
+                    <li class="flex items-center">
+                        <i data-feather="edit" class="mr-2"></i>
+                        Hackathon details updated
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <a href="/admin/users"
+                class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
                 <h2 class="text-xl font-semibold mb-2">Manage Users</h2>
                 <p>View, edit, and delete user accounts</p>
             </a>
-            <a href="/admin/events" class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
+            <a href="/admin/events"
+                class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
                 <h2 class="text-xl font-semibold mb-2">Manage Events</h2>
                 <p>Add, edit, and delete events</p>
             </a>
-            <a href="/admin/hackathons" class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
+            <a href="/admin/hackathons"
+                class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:bg-zinc-700 transition duration-300">
                 <h2 class="text-xl font-semibold mb-2">Manage Hackathons</h2>
                 <p>Add, edit, and delete hackathons</p>
             </a>
         </div>
-        
-        <a href="/admin/logout" class="mt-8 inline-block bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold py-2 px-4 rounded">
-            Logout
-        </a>
     </div>
+
+    <script>
+        feather.replace();
+
+        // Sample data for charts
+        const chartData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Growth',
+                data: [12, 19, 3, 5, 2, 3],
+                borderColor: '#B0A4D1',
+                tension: 0.1
+            }]
+        };
+
+        const chartConfig = {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        const charts = ['userChart', 'eventChart', 'hackathonChart'].map(id =>
+            new Chart(document.getElementById(id), chartConfig)
+        );
+
+        const themeToggle = document.getElementById('themeToggle');
+        let isDarkMode = true;
+
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            updateTheme();
+        });
+
+        function updateTheme() {
+            document.documentElement.classList.toggle('dark', isDarkMode);
+
+            const iconName = isDarkMode ? 'sun' : 'moon';
+            themeToggle.innerHTML = `<i data-feather="${iconName}" class="text-white"></i>`;
+            feather.replace();
+
+            charts.forEach(chart => {
+                chart.options.scales.y.grid.color = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+                chart.options.scales.x.grid.color = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+                chart.update();
+            });
+
+            document.body.classList.toggle('bg-white', !isDarkMode);
+            document.body.classList.toggle('bg-gradient-to-br', isDarkMode);
+            document.body.classList.toggle('from-zinc-900', isDarkMode);
+            document.body.classList.toggle('to-zinc-800', isDarkMode);
+            document.body.classList.toggle('text-zinc-900', !isDarkMode);
+            document.body.classList.toggle('text-zinc-200', isDarkMode);
+
+            const cards = document.querySelectorAll('.bg-zinc-800, .bg-white');
+            cards.forEach(card => {
+                card.classList.toggle('bg-zinc-800', isDarkMode);
+                card.classList.toggle('bg-white', !isDarkMode);
+            });
+
+            const buttons = document.querySelectorAll('.bg-[#B0A4D1]');
+            buttons.forEach(button => {
+                button.classList.toggle('text-zinc-900', isDarkMode);
+                button.classList.toggle('text-white', !isDarkMode);
+            });
+
+        }
+
+        updateTheme();
+
+    </script>
 </body>
+
 </html>

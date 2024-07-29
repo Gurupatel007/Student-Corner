@@ -383,26 +383,32 @@
         <!-- Sidebar -->
         <nav class="bg-neutral-800 w-64 px-4 py-8 hidden md:block">
             <div class="flex items-center mb-8">
-                <img src="/path/to/logo.png" alt="Logo" class="w-10 h-10 mr-3">
+                <img src="/images/Profiles/avatar<%= accounts.gender === 'Female' ? Math.floor(Math.random() * 2) + 3 : Math.floor(Math.random() * 2) + 1 %>.jpg" alt="Logo" class="w-10 h-10 mr-3 rounded-full bg-white ">
                 <h1 class="text-2xl font-bold">Dashboard</h1>
             </div>
             <ul>
                 <li class="mb-4">
-                    <a href="/events" class="flex items-center text-gray-300 hover:text-white">
+                    <a href="/events" class="flex items-center bg-zinc-700 px-4 py-2 rounded-md text-gray-300 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         Events
                     </a>
                 </li>
                 <li class="mb-4">
-                    <a href="/hackathons" class="flex items-center text-gray-300 hover:text-white">
+                    <a href="/hackathons" class="flex items-center bg-zinc-700 px-4 py-2 rounded-md text-gray-300 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         Hackathons
                     </a>
                 </li>
                 <li class="mb-4">
-                    <a href="/scholarships" class="flex items-center text-gray-300 hover:text-white">
+                    <a href="/scholarships" class="flex items-center bg-zinc-700 px-4 py-2 rounded-md text-gray-300 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                         Scholarships
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/logout" class="flex items-center bg-zinc-700 px-4 py-2 rounded-md text-gray-300 hover:text-white transition duration-300 ease-in-out transform hover:scale-105 ">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 4 0 01-6 0v-1m6 0H9"></path></svg>
+                        Logout
                     </a>
                 </li>
             </ul>
@@ -419,7 +425,7 @@
                             <span class="absolute top-0 right-0 bg-red-500 rounded-full w-3 h-3"></span>
                         </button>
                         <div class="relative">
-                            <img src="/images/Profiles/avatar<%= accounts.gender === 'Female' ? Math.floor(Math.random() * 2) + 3 : Math.floor(Math.random() * 2) + 1 %>.jpg" alt="Profile" class="w-10 h-10 rounded-full">
+                            <img src="/images/Profiles/avatar<%= accounts.gender === 'Female' ? Math.floor(Math.random() * 2) + 3 : Math.floor(Math.random() * 2) + 1 %>.jpg" alt="Profile" class="w-10 h-10 rounded-full bg-white ">
                             <span class="absolute bottom-0 right-0 bg-green-500 rounded-full w-3 h-3"></span>
                         </div>
                     </div>
@@ -430,7 +436,7 @@
                     <div class="bg-neutral-800 p-6 rounded-lg shadow-lg">
                         <h2 class="text-2xl font-semibold mb-4">Profile</h2>
                         <div class="flex items-center mb-4">
-                            <img src="/images/Profiles/avatar<%= accounts.gender === 'Female' ? Math.floor(Math.random() * 2) + 3 : Math.floor(Math.random() * 2) + 1 %>.jpg" alt="Profile" class="w-20 h-20 rounded-full mr-4">
+                            <img src="/images/Profiles/avatar<%= accounts.gender === 'Female' ? Math.floor(Math.random() * 2) + 3 : Math.floor(Math.random() * 2) + 1 %>.jpg" alt="Profile" class="w-20 h-20 rounded-full mr-4 bg-white ">
                             <div>
                                 <h3 class="text-xl font-semibold"><%= accounts.name %></h3>
                                 <p class="text-gray-400"><%= accounts.gender %></p>
@@ -453,11 +459,11 @@
                                         <h3 class="text-lg font-semibold"><%= event.eventName %></h3>
                                         <p class="text-sm text-gray-400"><%= event.location %></p>
                                     </div>
-                                    <a href="/event/<%= event.moreDetails.eventid %>" class="bg-purple-500 hover:bg-purple-700 text-white font-semibold px-3 py-1 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mr-3">Details</a>
+                                    <a href="/event/<%= event.id %>" class="bg-purple-500 hover:bg-purple-700 text-white font-semibold px-3 py-1 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mr-3">Details</a>
                                 </li>
                             <% }) %>
                         </ul>
-                        <button onclick="location.href='/my-events'" class="w-full bg-purple-500 hover:bg-purple-700 text-white font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mt-4">View All Events</button>
+                        <button onclick="location.href='/events'" class="w-full bg-purple-500 hover:bg-purple-700 text-white font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mt-4">View All Events</button>
                     </div>
     
                     <!-- Upcoming Hackathons -->
@@ -471,18 +477,18 @@
                                         <h3 class="text-lg font-semibold"><%= hackathon.eventName %></h3>
                                         <p class="text-sm text-gray-400"><%= hackathon.location %></p>
                                     </div>
-                                    <a href="/hackathon/<%= hackathon.moreDetails.eventid %>" class="bg-purple-500 hover:bg-purple-700 text-white font-semibold px-3 py-1 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mr-3">Details</a>
+                                    <a href="/hackathon/<%= hackathon.id %>" class="bg-purple-500 hover:bg-purple-700 text-white font-semibold px-3 py-1 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mr-3">Details</a>
                                 </li>
                             <% }) %>
                         </ul>
-                        <button onclick="location.href='/my-hackathons'" class="w-full bg-purple-500 hover:bg-purple-700 text-white font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mt-4">View All Hackathons</button>
+                        <button onclick="location.href='/hackathons'" class="w-full bg-purple-500 hover:bg-purple-700 text-white font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105 mt-4">View All Hackathons</button>
                     </div>
     
                     <!-- Enrolled Events -->
                     <div class="bg-neutral-800 p-6 rounded-lg shadow-lg">
                         <h2 class="text-2xl font-semibold mb-4">Enrolled Events</h2>
                         <ul>
-                            <% EnrolledEvents.forEach(event => { %>
+                            <% EnrolledEvents.slice(0,3).forEach(event => { %>
                                 <li class="mb-4 flex items-center overflow-hidden">
                                     <img src="<%= event.image %>" alt="<%= event.name %>" class="w-16 h-16 object-cover rounded-md ">
                                 <div class="flex-grow p-3">
@@ -500,7 +506,7 @@
                 <div class="bg-neutral-800 p-6 rounded-lg shadow-lg">
                     <h2 class="text-2xl font-semibold mb-4">Enrolled Hackathons</h2>
                     <ul>
-                        <% EnrolledHackthons.forEach(hackathon => { %>
+                        <% EnrolledHackthons.slice(0,3).forEach(hackathon => { %>
                             <li class="mb-4 flex items-center overflow-hidden">
                                 <img src="<%= hackathon.image %>" alt="<%= hackathon.name %>" class="w-16 h-16 object-cover rounded-md ">
                                 <div class="flex-grow p-3">
