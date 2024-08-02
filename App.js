@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const db = require("./config/db");
-// const {movePastEvents} = require("./utils/movePastEvents");
+const {updateStatus} = require("./utils/updateStatus");
 
 
 const port = process.env.PORT || 3000;
@@ -29,15 +29,36 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// movePastEvents();
+// updateStatus();
 
-// Routes
-app.use('/', userRoutes);
-app.use('/admin', adminRoutes);
+// // Routes
+// app.use('/', userRoutes);
+// app.use('/admin', adminRoutes);
 
 
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// // Start the server
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
+
+async function startServer() {
+  try {
+    await updateStatus();
+    console.log('Status updated successfully');
+
+    // Routes
+    app.use('/', userRoutes);
+    app.use('/admin', adminRoutes);
+
+    // Start the server
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.error('Error updating status:', error);
+    process.exit(1);
+  }
+}
+
+startServer();

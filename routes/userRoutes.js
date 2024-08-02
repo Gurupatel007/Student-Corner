@@ -9,18 +9,99 @@ const generateNumericOTP = require('../utils/generateOTP');
 const upcomingEvents = [];
 const upcomingHackthons = [];
 const EnrolledEvents = [];
-const EnrolledHackathons = [];
+const EnrolledHackthons = [];
 const PastEnrolledEvents = [];
-const PastEnrolledHackathons = [];
-const PastEvents = [];
-const PastHackathons = [];
+const PastEnrolledHackthons = [];
 const otps = {};
+
+// function loadEventData() {
+//   return new Promise((resolve, reject) => {
+//     const query = `
+//       SELECT e.*, ed.*
+//       FROM events e
+//       JOIN event_details ed ON e.id = ed.event_id
+//     `;
+
+//     db.query(query, (error, results) => {
+//       if (error) reject(error);
+
+//       // console.log(results);
+//       const eventData = results.map(row => ({
+//         id: row.id,
+//         deadlineDate: row.deadlineDate,
+//         eventName: row.eventName,
+//         logo: row.logo,
+//         location: row.location,
+//         month: row.month,
+//         day: row.day,
+//         moreDetails: {
+//           eventid: row.eventid,
+//           img: row.img,
+//           startingTime: row.startingTime,
+//           endingTime: row.endingTime,
+//           description: row.description,
+//           age: row.age,
+//           country: row.country
+//         }
+//       }));
+
+//       upcomingEvents.push(...eventData);
+//       resolve();
+//     });
+//   });
+// }
+
+// function loadHackathonData() {
+//   return new Promise((resolve, reject) => {
+//     const query = `
+//       SELECT
+//         h.id, h.deadlineDate, h.eventName, h.logo, h.location, h.month, h.day,
+//         hd.eventid, hd.img, hd.startingTime, hd.endingTime, hd.description, hd.age, hd.country
+//       FROM hackathons h
+//       JOIN hackathon_details hd ON h.id = hd.hackathon_id
+//     `;
+
+//     db.query(query, (error, results) => {
+//       if (error) {
+//         reject(error);
+//         return;
+//       }
+
+//       // console.log(results);
+
+//       if (results && results.length > 0) {
+//         const hackathonData = results.map(row => ({
+//           id: row.id,
+//           deadlineDate: row.deadlineDate,
+//           eventName: row.eventName,
+//           logo: row.logo,
+//           location: row.location,
+//           month: row.month,
+//           day: row.day,
+//           moreDetails: {
+//             eventid: row.eventid,
+//             img: row.img,
+//             startingTime: row.startingTime,
+//             endingTime: row.endingTime,
+//             description: row.description,
+//             age: row.age,
+//             country: row.country
+//           }
+//         }));
+
+//         upcomingHackthons.push(...hackathonData);
+//       }
+
+//       resolve();
+//     });
+//   });
+// }
 
 function loadEventData() {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT *
-      FROM events
+      FROM events where status='active'
     `;
 
     db.query(query, (error, results) => {
@@ -37,6 +118,7 @@ function loadEventData() {
         location: row.location,
         month: row.month,
         day: row.day,
+        status: row.status,
         moreDetails: {
           img: row.img,
           startingTime: row.startingTime,
@@ -47,18 +129,8 @@ function loadEventData() {
         }
       }));
 
-      const receivedData = eventData;
-      receivedData.forEach((data) => {
-        if (data.deadlineDate < new Date()) {
-          PastEvents.push(data);
-        } else {
-          upcomingEvents.push(data);
-        }
-      });
-
-      // console.log('upcomingEvents:', upcomingEvents);
-
-      // upcomingEvents.push(...eventData);
+      upcomingEvents.push(...eventData);
+      // console.log(upcomingEvents);
       resolve();
     });
   });
@@ -68,7 +140,7 @@ function loadHackathonData() {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT *
-      FROM hackathons
+      FROM hackathons where status='active'
     `;
 
     db.query(query, (error, results) => {
@@ -86,6 +158,7 @@ function loadHackathonData() {
           location: row.location,
           month: row.month,
           day: row.day,
+          status : row.status,
           moreDetails: {
             img: row.img,
             startingTime: row.startingTime,
@@ -96,16 +169,7 @@ function loadHackathonData() {
           }
         }));
 
-        const receivedData = hackathonData;
-        receivedData.forEach((data) => {
-          if (data.deadlineDate < new Date()) {
-            PastHackathons.push(data);
-          } else {
-            upcomingHackthons.push(data);
-          }
-        });
-        // console.log('upcomingHackthons:', upcomingHackthons);
-        // upcomingHackthons.push(...hackathonData);
+        upcomingHackthons.push(...hackathonData);
       }
 
       resolve();
@@ -113,13 +177,89 @@ function loadHackathonData() {
   });
 }
 
+
+// function loadEnrolledEvents(userEmail) {
+//   return new Promise((resolve, reject) => {
+//     const query = `
+//   SELECT ee.*, e.eventName, e.deadlineDate, e.location, ed.img
+//   FROM event_enrollments ee
+//   JOIN events e ON ee.event_id = e.id
+//   JOIN event_details ed ON e.id = ed.event_id
+//   WHERE ee.user_email = ?
+// `;
+
+
+
+//     console.log('Loading enrolled events for user:', userEmail);
+//     db.query(query, [userEmail], (error, results) => {
+//       if (error) {
+//         console.error('Error loading enrolled events:', error);
+//         reject(error);
+//         return;
+//       }
+//       const enrolledEvents = results.map(row => ({
+//         id: row.event_id,
+//         type: row.event_type,
+//         name: row.eventName,
+//         location: row.location,
+//         image: row.img,
+//         deadline: row.deadlineDate,
+//         status: row.status
+//       }));
+//       EnrolledEvents.length = 0;
+//       EnrolledEvents.push(...enrolledEvents);
+//       // console.log('Enrolled events:', EnrolledEvents);
+//       resolve(enrolledEvents);
+//     });
+//   });
+// }
+
+
+// function loadEnrolledHackathons(userEmail) {
+//   return new Promise((resolve, reject) => {
+//     const query = `
+//   SELECT he.*, h.eventName, h.deadlineDate, h.location, hd.img
+//   FROM hackathon_enrollments he
+//   JOIN hackathons h ON he.hackathon_id = h.id
+//   JOIN hackathon_details hd ON h.id = hd.hackathon_id
+//   WHERE he.user_email = ?
+// `;
+
+
+
+//     console.log('Loading enrolled hackathons for user:', userEmail);
+//     db.query(query, [userEmail], (error, results) => {
+//       if (error) {
+//         console.error('Error loading enrolled hackathons:', error);
+//         reject(error);
+//         return;
+//       }
+
+//       // console.log('Enrolled hackathons query results:', results);
+//       const enrolledHackathons = results.map(row => ({
+//         id: row.event_id,
+//         type: row.event_type,
+//         name: row.eventName,
+//         deadline: row.deadlineDate,
+//         location: row.location,
+//         image: row.img
+//       }));
+
+//       EnrolledHackthons.length = 0; // Clear existing data
+//       EnrolledHackthons.push(...enrolledHackathons);
+//       // console.log('Enrolled hackathons:', EnrolledHackthons);
+//       resolve(enrolledHackathons);
+//     });
+//   });
+// }
+
 function loadEnrolledEvents(userEmail) {
   return new Promise((resolve, reject) => {
     const query = `
-  SELECT ee.*, e.eventName, e.deadlineDate, e.location, e.img
+  SELECT ee.*, e.eventName, e.deadlineDate, e.location, e.img, e.day, e.month
   FROM enrolled_events ee
   JOIN events e ON ee.event_id = e.id
-  WHERE ee.user_email = ?
+  WHERE ee.user_email = ? AND status='active'
 `;
 
     console.log('Loading enrolled events for user:', userEmail);
@@ -135,21 +275,13 @@ function loadEnrolledEvents(userEmail) {
         location: row.location,
         image: row.img,
         deadline: row.deadlineDate,
-        status: row.status // Ensure this column exists or remove it if not applicable
+        status: row.status,
+        day : row.day,
+        month : row.month
       }));
-
       EnrolledEvents.length = 0;
-      const receivedData = enrolledEvents;
-      receivedData.forEach((data) => {
-        if (data.deadline < new Date()) {
-          PastEnrolledEvents.push(data);
-        } else {
-          EnrolledEvents.push(data);
-        }
-      });
-
-      // EnrolledEvents.length = 0;
-      // EnrolledEvents.push(...enrolledEvents);
+      EnrolledEvents.push(...enrolledEvents);
+      // console.log(EnrolledEvents);
       resolve(enrolledEvents);
     });
   });
@@ -161,7 +293,7 @@ function loadEnrolledHackathons(userEmail) {
   SELECT eh.*, h.eventName, h.deadlineDate, h.location, h.img
   FROM enrolled_hackathons eh
   JOIN hackathons h ON eh.hackathon_id = h.id
-  WHERE eh.user_email = ?
+  WHERE eh.user_email = ? AND status='active'
 `;
 
     console.log('Loading enrolled hackathons for user:', userEmail);
@@ -179,97 +311,148 @@ function loadEnrolledHackathons(userEmail) {
         image: row.img
       }));
 
-      EnrolledHackathons.length = 0;
-      const receivedData = enrolledHackathons;
-      receivedData.forEach((data) => {
-        if (data.deadline < new Date()) {
-          PastEnrolledHackathons.push(data);
-        } else {
-          EnrolledHackathons.push(data);
-        }
-      });
-
-      // EnrolledHackathons.length = 0; // Clear existing data
-      // EnrolledHackathons.push(...enrolledHackathons);
+      EnrolledHackthons.length = 0; // Clear existing data
+      EnrolledHackthons.push(...enrolledHackathons);
       resolve(enrolledHackathons);
     });
   });
 }
 
-// function loadPastEnrolledEvents(userEmail) {
-//   return new Promise((resolve, reject) => {
-//     const query = `
-//   SELECT ee.*, e.eventName, e.deadlineDate, e.location, e.img
-//   FROM enrolled_events ee
-//   JOIN events e ON ee.event_id = e.id
-//   WHERE ee.user_email = ? AND e.deadlineDate < CURDATE()
-// `;
+async function loadPastEnrolledEvents(userEmail) {
+  console.log('Loading past enrolled events for user:', userEmail);
+  
+  const query = `
+  SELECT 
+    events.id, 
+    events.deadlineDate, 
+    events.eventName, 
+    events.logo, 
+    events.location, 
+    events.month, 
+    events.day, 
+    events.img, 
+    events.startingTime, 
+    events.endingTime, 
+    events.description, 
+    events.age, 
+    events.country, 
+    events.status,
+    enrolled_events.user_email, 
+    enrolled_events.enrollment_date
+FROM 
+    events
+INNER JOIN 
+    enrolled_events 
+ON 
+    events.id = enrolled_events.event_id
+WHERE 
+    events.status = 'past';
 
-//     console.log('Loading past enrolled events for user:', userEmail);
-//     db.query(query, [userEmail], (error, results) => {
-//       if (error) {
-//         console.error('Error loading past enrolled events:', error);
-//         reject(error);
-//         return;
-//       }
-//       const pastEnrolledEvents = results.map(row => ({
-//         id: row.event_id,
-//         name: row.eventName,
-//         location: row.location,
-//         image: row.img,
-//         deadline: row.deadlineDate,
-//         status: row.status // Ensure this column exists or remove it if not applicable
-//       }));
-//       PastEnrolledEvents.length = 0;
-//       PastEnrolledEvents.push(...pastEnrolledEvents);
-//       resolve(pastEnrolledEvents);
-//     });
-//   });
-// }
+  `;
 
-// function loadPastEnrolledHackathons(userEmail) {
-//   return new Promise((resolve, reject) => {
-//     const query = `
-//   SELECT eh.*, h.eventName, h.deadlineDate, h.location, h.img
-//   FROM enrolled_hackathons eh
-//   JOIN hackathons h ON eh.hackathon_id = h.id
-//   WHERE eh.user_email = ? AND h.deadlineDate < CURDATE()
-// `;
+  try {
+    return await new Promise((resolve, reject) => {
+      db.query(query, [userEmail], (error, results) => {
+        if (error) {
+          console.error('Error executing query:', error);
+          reject(error);
+          return;
+        }
 
-//     console.log('Loading past enrolled hackathons for user:', userEmail);
-//     db.query(query, [userEmail], (error, results) => {
-//       if (error) {
-//         console.error('Error loading past enrolled hackathons:', error);
-//         reject(error);
-//         return;
-//       }
-//       const pastEnrolledHackathons = results.map(row => ({
-//         id: row.hackathon_id,
-//         name: row.eventName,
-//         deadline: row.deadlineDate,
-//         location: row.location,
-//         image: row.img
-//       }));
+        console.log('Query executed successfully');
+        console.log('Number of results:', results.length);
+        // console.log(results);
+        const pastEnrolledEvents = results.map(row => ({
+          id: row.id,
+          name: row.eventName,
+          location: row.location,
+          image: row.img,
+          deadline: row.deadlineDate,
+          status: row.status,
+          day: row.day,
+          month: row.month
+        }));
+        PastEnrolledEvents.length = 0;
+        PastEnrolledEvents.push(...pastEnrolledEvents);
+        resolve(pastEnrolledEvents);
+      });
+    });
+  } catch (error_1) {
+    console.error('Error loading past enrolled events:', error_1);
+    throw error_1;
+  }
+}
 
-//       PastEnrolledHackathons.length = 0; // Clear existing data
-//       PastEnrolledHackathons.push(...pastEnrolledHackathons);
-//       resolve(pastEnrolledHackathons);
-//     });
-//   });
-// }
+function loadPastEnrolledHackathons(userEmail) {
+  try {
+    return new Promise((resolve, reject) => {
+      const query = `
+      SELECT 
+    hackathons.id, 
+    hackathons.deadlineDate, 
+    hackathons.eventName, 
+    hackathons.logo, 
+    hackathons.location, 
+    hackathons.month, 
+    hackathons.day, 
+    hackathons.img, 
+    hackathons.startingTime, 
+    hackathons.endingTime, 
+    hackathons.description, 
+    hackathons.age, 
+    hackathons.country, 
+    hackathons.status,
+    enrolled_hackathons.user_email, 
+    enrolled_hackathons.enrollment_date
+FROM 
+    hackathons
+INNER JOIN 
+    enrolled_hackathons 
+ON 
+    hackathons.id = enrolled_hackathons.hackathon_id
+WHERE 
+    hackathons.status = 'past';
+      `;
+      
+      db.query(query, [userEmail], (error, results) => {
+        if (error) {
+          console.error('Error executing query:', error);
+          reject(error);
+          return;
+        }
+        
+        console.log('Query executed successfully');
+        console.log('Number of results:', results.length);
+        // console.log(results);
+        
+        const pastEnrolledHackathons = results.map(row => ({
+          id: row.id,
+          name: row.eventName,
+          location: row.location,
+          image: row.img,
+          deadline: row.deadlineDate,
+          status: row.status , 
+          day : row.day,
+          month : row.month
+        }));
+
+        PastEnrolledHackthons.length = 0;
+        PastEnrolledHackthons.push(...pastEnrolledHackathons);
+        console.log(PastEnrolledHackthons)
+        resolve(pastEnrolledHackathons);
+      });
+    });
+  } catch (error) {
+    console.error('Promise rejected:', error);
+    throw error;
+  }
+}
+
 
 
 // Load data when the server starts
-// // Load data when the server starts
-// Promise.all([loadEventData(), loadHackathonData()])
-//   .then(() => {
-//     console.log('All data loaded successfully');
-//   })
-//   .catch((error) => {
-//     console.error('Error loading data:', error);
-//   });
-
-Promise.all([loadEventData(), loadHackathonData()])
+// Load data when the server starts
+Promise.all([loadEventData(), loadHackathonData(),loadPastEnrolledEvents(),loadPastEnrolledHackathons ()])
   .then(() => {
     console.log('All data loaded successfully');
   })
@@ -280,28 +463,16 @@ Promise.all([loadEventData(), loadHackathonData()])
 
 
 // Use this function to refresh data as needed
-// function refreshData(userEmail) {
-//   upcomingEvents.length = 0;
-//   upcomingHackthons.length = 0;
-//   return Promise.all([
-//     loadEventData(),
-//     loadHackathonData(),
-//     loadEnrolledEvents(userEmail),
-//     loadEnrolledHackathons(userEmail)
-//   ]);
-// }
-
 function refreshData(userEmail) {
   upcomingEvents.length = 0;
   upcomingHackthons.length = 0;
-  PastEnrolledEvents.length = 0; // Clear the past enrolled events array
   return Promise.all([
     loadEventData(),
     loadHackathonData(),
     loadEnrolledEvents(userEmail),
     loadEnrolledHackathons(userEmail),
-    // loadPastEnrolledEvents(userEmail), // Load past enrolled events
-    // loadPastEnrolledHackathons(userEmail) // Load past enrolled hackathons
+    loadPastEnrolledEvents(userEmail),
+    loadPastEnrolledHackathons(userEmail)
   ]);
 }
 
@@ -335,7 +506,8 @@ router.get('/my-events', (req, res) => {
   if (!req.session.user) {
     res.redirect('/signin');
   } else {
-    console.log('Enrolled events:', EnrolledEvents);
+    // console.log('Enrolled events:', EnrolledEvents);
+    // console.log('Past Enrolled Events: ',PastEnrolledEvents);
     res.render('enrolled_events', { EnrolledEvents, PastEnrolledEvents });
   }
 });
@@ -344,24 +516,10 @@ router.get('/my-hackathons', (req, res) => {
   if (!req.session.user) {
     res.redirect('/signin');
   } else {
-    res.render('enrolled_hackathons', { EnrolledHackathons });
+    res.render('enrolled_hackathons', { EnrolledHackthons , PastEnrolledHackthons });
   }
 });
 
-
-router.get('/edit-profile', (req, res) => {
-  const sql = 'SELECT * FROM accounts WHERE email = ?';
-  db.query(sql, [req.session.user.email], (err, result) => {
-    if (err) {
-      console.error('MySQL query error:', err);
-      res.status(500).send('An error occurred while fetching user data');
-    } else {
-      const user = result[0];
-      // console.log(user);
-      res.render('edit-profile', { user });
-    }
-  });
-});
 
 router.post('/profile/edit', (req, res) => {
   const { name, email, phonenumber, gender, dob, password } = req.body;
@@ -385,72 +543,42 @@ router.post('/profile/edit', (req, res) => {
 //     res.render('events', { upcomingEvents });
 //   }
 // });
-// --------------------------
-// router.get('/events', (req, res) => {
-//   if (!req.session.user) {
-//     return res.status(401).json({ status: 'error', message: 'User not logged in' });
-//   }
-//   const userEmail = req.session.user.email;
-
-//   // Fetch all events
-//   const fetchEventsQuery = 'SELECT * FROM events';
-//   db.query(fetchEventsQuery, (eventsError, eventsResults) => {
-//     if (eventsError) {
-//       console.error(eventsError);
-//       return res.status(500).json({ status: 'error', message: 'Failed to fetch events' });
-//     }
-
-//     // Fetch user's enrolled events
-//     const fetchEnrollmentsQuery = 'SELECT event_id FROM enrolled_events WHERE user_email = ?';
-//     db.query(fetchEnrollmentsQuery, [userEmail], (enrollmentsError, enrollmentsResults) => {
-//       if (enrollmentsError) {
-//         console.error(enrollmentsError);
-//         return res.status(500).json({ status: 'error', message: 'Failed to fetch enrollments' });
-//       }
-
-//       // Create a set of enrolled event IDs for quick lookup
-//       const enrolledEventIds = new Set(enrollmentsResults.map(enrollment => enrollment.event_id));
-
-//       // Add isEnrolled property to each event
-//       const upcomingEvents = eventsResults.map(event => ({
-//         ...event,
-//         isEnrolled: enrolledEventIds.has(event.id)
-//       }));
-
-//       // Render the template with the upcomingEvents data
-//       res.render('events', { upcomingEvents });
-//     });
-//   });
-// });
-
 router.get('/events', (req, res) => {
   if (!req.session.user) {
-    // return res.status(401).json({ status: 'error', message: 'User not logged in' });
     res.redirect('/signin');
-  }
-  const userEmail = req.session.user.email;
+  } else {
+    const userEmail = req.session.user.email;
 
-  // Fetch user's enrolled events
-  const fetchEnrollmentsQuery = 'SELECT event_id FROM enrolled_events WHERE user_email = ?';
-  db.query(fetchEnrollmentsQuery, [userEmail], (enrollmentsError, enrollmentsResults) => {
-    if (enrollmentsError) {
-      console.error(enrollmentsError);
-      return res.status(500).json({ status: 'error', message: 'Failed to fetch enrollments' });
+  // Fetch all events
+  const fetchEventsQuery = 'SELECT * FROM events where status="active"';
+  db.query(fetchEventsQuery, (eventsError, eventsResults) => {
+    if (eventsError) {
+      console.error(eventsError);
+      return res.status(500).json({ status: 'error', message: 'Failed to fetch events' });
     }
 
-    // Create a set of enrolled event IDs for quick lookup
-    const enrolledEventIds = new Set(enrollmentsResults.map(enrollment => enrollment.event_id));
+    // Fetch user's enrolled events
+    const fetchEnrollmentsQuery = 'SELECT event_id FROM enrolled_events WHERE user_email = ?';
+    db.query(fetchEnrollmentsQuery, [userEmail], (enrollmentsError, enrollmentsResults) => {
+      if (enrollmentsError) {
+        console.error(enrollmentsError);
+        return res.status(500).json({ status: 'error', message: 'Failed to fetch enrollments' });
+      }
 
-    // Add isEnrolled property to each event in upcomingEvents
-    const updatedUpcomingEvents = upcomingEvents.map(event => ({
-      ...event,
-      isEnrolled: enrolledEventIds.has(event.id)
-    }));
+      // Create a set of enrolled event IDs for quick lookup
+      const enrolledEventIds = new Set(enrollmentsResults.map(enrollment => enrollment.event_id));
 
-    // Render the template with the updatedUpcomingEvents data
-    res.render('events', { upcomingEvents: updatedUpcomingEvents });
+      // Add isEnrolled property to each event
+      const upcomingEvents = eventsResults.map(event => ({
+        ...event,
+        isEnrolled: enrolledEventIds.has(event.id)
+      }));
+
+      // Render the template with the upcomingEvents data
+      res.render('events', { upcomingEvents });
+    });
   });
-});
+}});
 
 // router.get('/hackathons', (req, res) => {
 //   if (!req.session.user) {
@@ -467,7 +595,7 @@ router.get('/hackathons', (req, res) => {
     const userEmail = req.session.user.email;
 
     // Fetch all hackathons
-    const fetchHackathonsQuery = 'SELECT * FROM hackathons';
+    const fetchHackathonsQuery = 'SELECT * FROM hackathons where status="active"';
     db.query(fetchHackathonsQuery, (hackathonsError, hackathonsResults) => {
       if (hackathonsError) {
         console.error(hackathonsError);
@@ -498,6 +626,31 @@ router.get('/hackathons', (req, res) => {
 });
 
 
+// router.get("/dashboard", (req, res) => {
+//   if (!req.session.user) {
+//     res.redirect("/signin");
+//   } else {
+//     const user = req.session.user;
+//     Promise.all([
+//       loadEnrolledEvents(user.email),
+//       loadEnrolledHackathons(user.email),
+//     ])
+//       .then(([enrolledEvents, enrolledHackathons]) => {
+//         res.render("dashboard", {
+//           accounts: user,
+//           upcomingEvents,
+//           upcomingHackthons,
+//           EnrolledEvents: enrolledEvents,
+//           EnrolledHackthons: enrolledHackathons
+//         });
+//       })
+//       .catch(error => {
+//         console.error('Error loading user data:', error);
+//         res.status(500).send('An error occurred while loading user data');
+//       });
+//   }
+// });
+
 router.get("/dashboard", (req, res) => {
   if (!req.session.user) {
     res.redirect("/signin");
@@ -505,11 +658,11 @@ router.get("/dashboard", (req, res) => {
     const user = req.session.user;
     Promise.all([
       loadEnrolledEvents(user.email),
-      loadEnrolledHackathons(user.email)
+      loadEnrolledHackathons(user.email),
     ])
       .then(([enrolledEvents, enrolledHackathons]) => {
         res.render("dashboard", {
-          accounts: user,
+          accounts: user,  // Change this line
           upcomingEvents,
           upcomingHackthons,
           EnrolledEvents: enrolledEvents,
@@ -521,6 +674,55 @@ router.get("/dashboard", (req, res) => {
         res.status(500).send('An error occurred while loading user data');
       });
   }
+});
+
+router.get('/edit-profile', (req, res) => {
+  const sql = 'SELECT * FROM accounts WHERE email = ?';
+  db.query(sql, [req.session.user.email], (err, result) => {
+    if (err) {
+      console.error('MySQL query error:', err);
+      res.status(500).send('An error occurred while fetching user data');
+    } else {
+      const user = result[0];
+      // console.log(user);
+      res.render('edit-profile', { user });
+    }
+  });
+});
+
+
+
+
+
+router.get('/pastEvents', (req, res) => {
+  // if (!req.session.user) {
+  //   res.redirect('/signin');
+  // } else {
+    db.query('SELECT * FROM events WHERE status = "past"', (error, results) => {
+      if (error) {
+        console.error('Error loading past events:', error);
+        res.status(500).send('An error occurred while fetching past events');
+      }else{
+        console.log(results);
+        res.render('pastEvents', { pastEvents: results });
+      }
+  });
+});
+  // });
+// }});
+
+router.get('/pastHackathons', (req, res) => {
+  // if (!req.session.user) {
+  //   res.redirect('/signin');
+  // } else {
+    db.query('SELECT * FROM hackathons WHERE status = "past"', (error, results) => {
+      if (error) {
+        console.error('Error loading past hackathons:', error);
+        res.status(500).send('An error occurred while fetching past hackathons');
+      }else{
+        res.render('pastHackathons', { pastHackathons: results });
+      }
+  });
 });
 
 router.post("/register", (req, res) => {
@@ -791,8 +993,9 @@ router.post("/update-password", (req, res) => {
 // });
 router.get('/event/:id', (req, res) => {
   if (!req.session.user) {
-    return res.status(401).json({ status: 'error', message: 'User not logged in' });
-  }
+    // return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    res.redirect('/signin');
+  }else{
 
   const eventId = req.params.id;
   const userEmail = req.session.user.email;
@@ -835,11 +1038,11 @@ router.get('/event/:id', (req, res) => {
         }))
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
-
+      console.log(eventDetails);
       res.render('eventDetails', { eventDetails, relatedEvents });
     });
   });
-});
+}});
 
 // router.get('/hackathon/:id', (req, res) => {
 //   const hackathonId = req.params.id;
@@ -858,8 +1061,9 @@ router.get('/event/:id', (req, res) => {
 
 router.get('/hackathon/:id', (req, res) => {
   if (!req.session.user) {
-    return res.status(401).json({ status: 'error', message: 'User not logged in' });
-  }
+    // return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    res.redirect('/signin');
+  } else{
 
   const hackathonId = req.params.id;
   const userEmail = req.session.user.email;
@@ -901,11 +1105,11 @@ router.get('/hackathon/:id', (req, res) => {
         }))
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
-
+        console.log(hackathonDetails);
       res.render('hackathonDetails', { hackathonDetails, relatedHackathons });
     });
   });
-});
+}});
 
 
 // --------------------------------------- update USER DETAILS ---------------------------------
@@ -1012,7 +1216,8 @@ router.post('/subscribe', (req, res) => {
 
 router.post('/enroll', (req, res) => {
   if (!req.session.user) {
-    return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    // return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    res.redirect('/signin');
   }
 
   const { eventId, eventType } = req.body;
@@ -1053,7 +1258,8 @@ router.post('/enroll', (req, res) => {
 
 router.post('/unenroll', (req, res) => {
   if (!req.session.user) {
-    return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    // return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    res.redirect('/signin');
   }
 
   const { eventId, eventType } = req.body;
@@ -1072,7 +1278,8 @@ router.post('/unenroll', (req, res) => {
 
 router.post('/unenroll/:id', (req, res) => {
   if (!req.session.user) {
-    return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    // return res.status(401).json({ status: 'error', message: 'User not logged in' });
+    res.redirect('/signin');
   }
 
   const hackathonId = req.params.id;

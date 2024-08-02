@@ -111,7 +111,8 @@
     <header class="header bg-opacity-0 w-full py-4 px-6 flex justify-between items-center z-10">
         <h1 class="header-title text-3xl font-bold">Enrolled<span class="italic ml-1">Events</span></h1>
         <nav class="header-links flex text-xl">
-            <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a>
+            <!-- <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a> -->
+            <a href="/events" class="hover:text-[#B0A4D1] mx-2">Events</a>
             <a href="/hackathons" class="hover:text-[#B0A4D1] mx-2">Hackathon</a>
             <a href="/dashboard" class="hover:text-[#B0A4D1] mx-2">Dashboard</a>
         </nav>
@@ -131,7 +132,7 @@
                                 <p class="text-lg mb-4">
                                     <span class="font-semibold">Location:</span> <%= event.location %><br>
                                     <span class="font-semibold">Date:</span> <%= new Date(event.deadline).toLocaleDateString()%><br>
-                                    <!-- <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %> -->
+                                    <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %>
                                 </p>
                                 <p class="text-lg mb-4"><%= event.description %></p>
                                 <div class="flex space-x-4">
@@ -164,7 +165,7 @@
                                 <p class="text-lg mb-4">
                                     <span class="font-semibold">Location:</span> <%= event.location %><br>
                                     <span class="font-semibold">Date:</span> <%= new Date(event.deadline).toLocaleDateString()%><br>
-                                    <!-- <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %> -->
+                                    <span class="font-semibold">Day:</span> <%= event.day %>, <%= event.month %>
                                 </p>
                                 <p class="text-lg mb-4"><%= event.description %></p>
                                 <a href="/event/<%= event.id %>" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105">View Details</a>

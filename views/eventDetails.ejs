@@ -21,7 +21,7 @@
     <header class="header bg-opacity-0 w-full py-4 px-6 flex justify-between items-center z-10">
         <h1 class="header-title text-3xl font-bold">Event<span class="italic ml-1">details</span></h1>
         <nav class="header-links flex text-xl">
-            <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a>
+            <!-- <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a> -->
             <!-- please add button to events list and hackathons home page -->
             <a href="/events" class="hover:text-[#B0A4D1] mx-2">Events</a>
             <a href="/hackathons" class="hover:text-[#B0A4D1] mx-2">Hackathons</a>
@@ -58,14 +58,17 @@
                 <p class="text-lg mb-8">
                     <%= eventDetails.description %>
                 </p>
-                <% if (eventDetails.isEnrolled) { %>
+                <% if (eventDetails.isEnrolled && eventDetails.status==='active')  { %>
                     <button onclick="unenroll('<%= eventDetails.id %>', 'event')"
                         class="btn bg-red-500 text-white font-semibold px-6 py-3 rounded-md">Unenroll</button>
-                    <% } else { %>
+                    <% } else if(!eventDetails.isEnrolled && eventDetails.status==='active' ) { %>
                         <button onclick="enroll('<%= eventDetails.id %>', 'event')"
                             class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll
                             Now</button>
-                        <% } %>
+                        <% } else{ %>
+                            <button
+                                class="btn bg-gray-700 text-zinc-900 font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105" disabled>Ended</button>
+                        <%}%>
             </div>
         </div>
         <br><br>
@@ -86,13 +89,10 @@
                                 <%= new Date(event.deadlineDate).toLocaleDateString() %><br>
                                     <span class="font-semibold">Day:</span>
                                     <%= event.day %>, <%= event.month %><br>
-                                            <span class="font-semibold">Time:</span>
-                                            <%= event.startingTime %> - <%= event.endingTime %>
-                                                    <br>
-                                                    <span class="font-semibold">Age:</span>
-                                                    <%= event.age %><br>
-                                                        <span class="font-semibold">Country:</span>
-                                                        <%= event.country %>
+
+                        </p>
+                        <p class="text-lg mb-8">
+                            <%= eventDetails.description %>
                         </p>
                         <div class="flex space-x-4">
                             <a href="/event/<%= event.id %>"

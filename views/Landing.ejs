@@ -31,18 +31,27 @@
 <body class="gradient-bg text-white">
     <header class="fixed w-full py-4 px-6 flex justify-between items-center z-50 transition-all duration-300"
         id="header">
-        <h1 class="text-3xl font-bold">Student<span class="italic ml-1">corner</span></h1>
-        <nav class="text-xl">
-            <a href="#features" class="mx-2 hover:text-purple-300">Features</a>
-            <a href="#testimonials" class="mx-2 hover:text-purple-300">Testimonials</a>
-            <% if (isAuthenticated) { %>
-                <a href="/dashboard" class="mx-2 hover:text-purple-300">Dashboard</a>
-                <a href="/logout" class="mx-2 hover:text-purple-300">Logout</a>
-                <% } else { %>
-                    <a href="/signin" class="mx-2 hover:text-purple-300">Login</a>
-                    <a href="/signup" class="mx-2 hover:text-purple-300">Signup</a>
-                    <% } %>
-        </nav>
+        <div>
+            <h1 class="text-3xl font-bold">Student<span class="italic ml-1">corner</span></h1>
+        </div>
+        
+        <!-- <nav class="text-xl"> -->
+            <div class="text-xl bg-gray-300 bg-opacity-10 px-4 py-2 rounded-full ">
+                <a href="#features" class="mx-2 hover:text-purple-300">Features</a>
+                <a href="#testimonials" class="mx-2 hover:text-purple-300">Testimonials</a>
+                <a href="/pastEvents" class="mx-2 hover:text-purple-300">Past Events</a>
+                <a href="/pastHackathons" class="mx-2 hover:text-purple-300">Past Hackathons</a>
+            </div>
+            <div class="text-xl">
+                <% if (isAuthenticated) { %>
+                    <a href="/dashboard" class="mx-2 hover:text-purple-300">Dashboard</a>
+                    <a href="/logout" class="mx-2 hover:text-purple-300">Logout</a>
+                    <% } else { %>
+                        <a href="/signin" class="mx-2 text-2xl font-bold text-purple-300 hover:text-purple-500">Login</a>
+                        <a href="/signup" class="mx-2 text-2xl font-bold text-purple-300 hover:text-purple-500">Signup</a>
+                        <% } %>
+            </div>
+        <!-- </nav> -->
     </header>
 
     <section class="min-h-screen flex items-center justify-center px-4 py-20">
