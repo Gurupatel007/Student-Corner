@@ -29,19 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// updateStatus();
-
-// // Routes
-// app.use('/', userRoutes);
-// app.use('/admin', adminRoutes);
-
-
-
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Server is running on http://localhost:${port}`);
-// });
-
 async function startServer() {
   try {
     await updateStatus();

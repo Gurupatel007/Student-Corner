@@ -139,47 +139,6 @@ router.post('/users/add', (req, res) => {
   });
 });
 
-
-// Update your route to handle file uploads
-
-// router.post('/events/add', upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'img', maxCount: 1 }]), (req, res) => {
-//   const { eventName, deadlineDate, location, month, day, startingTime, endingTime, description, age, country } = req.body;
-//   const logoPath = req.files['logo'] ? '/images/uploads/' + req.files['logo'][0].filename : null;
-//   const imgPath = req.files['img'] ? '/images/uploads/' + req.files['img'][0].filename : null;
-//   const eventid = uuidv4();
-
-//   const eventSql = 'INSERT INTO events (id, deadlineDate, eventName, logo, location, month, day, img, startingTime, endingTime, description, age, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-//   db.query(eventSql, [eventid, deadlineDate, eventName, logoPath, location, month, day, imgPath, startingTime, endingTime, description, age, country], (err, result) => {
-//     if (err) {
-//       console.error('Error adding event:', err);
-//       res.status(500).send('Error adding event');
-//     } else {
-//       res.status(200).json({ message: 'Event added successfully' });
-//     }
-//   });
-// });
-
-
-// router.post('/hackathons/add', upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'img', maxCount: 1 }]), (req, res) => {
-//   const { eventName, deadlineDate, location, month, day, startingTime, endingTime, description, age, country } = req.body;
-//   const logoPath = req.files['logo'] ? '/images/uploads/' + req.files['logo'][0].filename : null;
-//   const imgPath = req.files['img'] ? '/images/uploads/' + req.files['img'][0].filename : null;
-//   const eventid = uuidv4();
-
-//   // Assuming the new 'hackathons' table now includes all details
-//   const hackathonSql = 'INSERT INTO hackathons (id, eventName, deadlineDate, location, month, day, startingTime, endingTime, description, age, country, logo, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-//   db.query(hackathonSql, [eventid, eventName, deadlineDate, location, month, day, startingTime, endingTime, description, age, country, logoPath, imgPath], (err, result) => {
-//     if (err) {
-//       console.error('Error adding hackathon:', err);
-//       res.status(500).json({ error: 'Error adding hackathon' });
-//     } else {
-//       res.status(200).json({ message: 'Hackathon added successfully' });
-//     }
-//   });
-// });
-
-
-
 // Function to fetch unique emails
 function getUniqueEmails() {
   return new Promise((resolve, reject) => {
@@ -201,23 +160,6 @@ function getUniqueEmails() {
     });
   });
 }
-
-// Function to send notification emails
-// async function sendNotificationEmails(type, name, emails) {
-//   const subject = `New ${type} Added: ${name}`;
-//   const text = `A new ${type.toLowerCase()} "${name}" has been added. Check it out!
-
-//   `;
-
-//   for (const email of emails) {
-//     try {
-//       await sendEmail(email, subject, text);
-//       console.log(`Notification email sent to ${email}`);
-//     } catch (error) {
-//       console.error(`Error sending email to ${email}:`, error);
-//     }
-//   }
-// }
 
 async function sendNotificationEmails(type, name, emails) {
   const subject = `New ${type} Added: ${name}`;

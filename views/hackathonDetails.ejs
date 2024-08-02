@@ -17,14 +17,10 @@
     <header class="header bg-opacity-0 w-full py-4 px-6 flex justify-between items-center z-10">
         <h1 class="header-title text-3xl font-bold">Hackathon<span class="italic ml-1">Details</span></h1>
         <nav class="header-links flex text-xl">
-            <!-- <a href="#" class="hover:text-[#B0A4D1] mx-2">About</a> -->
-            <!-- please add button to events list and hackathons home page -->
+           
             <a href="/events" class="hover:text-[#B0A4D1] mx-2">Events</a>
             <a href="/hackathons" class="hover:text-[#B0A4D1] mx-2">Hackathons</a>
             <a href="/dashboard" class="hover:text-[#B0A4D1] mx-2">Dashboard</a>
-            <!-- <a href="/" class="hover:text-[#B0A4D1] mx-2">Home</a> -->
-            <!-- <a href="/login" class="hover:text-[#B0A4D1] mx-2">Login</a>
-            <a href="/signup" class="hover:text-[#B0A4D1] mx-2">Signup</a> -->
         </nav>
     </header>
 
@@ -45,7 +41,6 @@
                     <span class="font-semibold">Country:</span> <%= hackathonDetails.country %>
                 </p>
                 <p class="text-lg mb-8"><%= hackathonDetails.description %></p>
-                <!-- <button onclick="enroll('<%= hackathonDetails.id %>', 'hackathon')" class="btn bg-[#B0A4D1] hover:bg-[#9B8EC6] text-zinc-900 font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Enroll Now</button> -->
                 <% if (hackathonDetails.isEnrolled && hackathonDetails.status==='active') { %>
                     <button onclick="unenroll('<%= hackathonDetails.id %>', 'hackathon')" class="btn bg-red-500 text-white font-semibold px-6 py-3 rounded-md transition duration-300 ease-in-out transform hover:scale-105">Unenroll</button>
                 <% } else if(!hackathonDetails.isEnrolled && hackathonDetails.status==='active') { %>
