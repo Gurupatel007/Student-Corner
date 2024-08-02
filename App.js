@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const db = require("./config/db");
-const {movePastEvents} = require("./utils/movePastEvents");
+// const {movePastEvents} = require("./utils/movePastEvents");
 
 
 const port = process.env.PORT || 3000;
@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-movePastEvents();
+// movePastEvents();
 
 // Routes
 app.use('/', userRoutes);
