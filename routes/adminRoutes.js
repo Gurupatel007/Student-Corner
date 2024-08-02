@@ -114,11 +114,11 @@ router.get('/dashboard', (req, res) => {
         const eventCount = eventCountResult.length;
         const hackathonCount = hackathonCountResult.length;
         
-        // if(req.session.admin){
+        if(req.session.admin){
           res.render('adminDashboard', { userCount, eventCount, hackathonCount });
-        // }else{
-          // res.redirect('/admin/login');
-        // }
+        }else{
+          res.redirect('/admin/login');
+        }
       });
     });
   });
